@@ -1,0 +1,60 @@
+= mem_inspect
+
+== About
+
+mem_inspect is ObjectSpace.each_object on crack.  mem_inspect gives you the
+contents of each slot in Ruby's heap.  mem_inspect also includes viewers that
+let you visualize the contents of Ruby's heap.
+
+== Installing mem_inspect
+
+First, install the gem:
+
+  $ sudo gem install mem_inspect
+
+Then you need to build a patched ruby:
+
+  ruby_mem_inspect_build
+
+Optionally, you can install the patch ruby binary.  It will be named
+"ruby_mem_inspect".
+
+== Using mem_inspect
+
+=== Dumping a PNG
+
+To get a PNG of memory use:
+
+  mem_inspect_ruby_1_8/ruby_mem_inspect -S ruby_mem_dump
+
+To get a PNG of memory use in your application:
+
+  require 'mem_inspect'
+  require 'mem_inspect/png_viewer'
+
+And when you want to dump a PNG:
+  
+  MemInspect::PNGViewer.new(1024, 768).draw
+
+== Dumping via AquaTerm
+
+First you'll need to install RubyCocoa.  You can find instructions for that
+here:
+
+http://rubycocoa.sourceforge.net/doc/getting.en.html
+
+http://rubycocoa.sourceforge.net/doc/build.en.html
+
+Then you'll need to download AquaTerm:
+
+http://sourceforge.net/project/showfiles.php?group_id=39915
+
+Once you have all that installed you can dump to an AquaTerm plot:
+
+  require 'mem_inspect'
+  require 'mem_inspect/aquaterm_viewer'
+
+And when you want a plot:
+
+  MemInspect::AquatermViewer.new(1024, 768).draw
+

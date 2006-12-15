@@ -1,0 +1,12 @@
+LICENSE
+Manifest.txt
+README
+Rakefile
+bin/ruby_mem_dump
+bin/ruby_mem_inspect_build
+gc.c.patch
+lib/mem_inspect.rb
+lib/mem_inspect/aquaterm_viewer.rb
+lib/mem_inspect/ascii_viewer.rb
+lib/mem_inspect/png_viewer.rb
+lib/mem_inspect/viewer.rb

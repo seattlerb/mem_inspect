@@ -1,0 +1,8 @@
+#!/usr/local/bin/ruby -w
+
+require 'mem_inspect'
+require 'mem_inspect/png_viewer'
+
+mv = MemInspect::PNGViewer.new 1024, 768
+mv.draw
+

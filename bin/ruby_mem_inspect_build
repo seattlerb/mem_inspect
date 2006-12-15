@@ -1,0 +1,45 @@
+#!/usr/local/bin/ruby -w
+
+require 'rubygems'
+require 'rake'
+
+ruby_dir = "mem_inspect_ruby_1_8"
+old_pwd = Dir.pwd
+
+if File.exist? ruby_dir then
+  Dir.chdir ruby_dir do "sh cvs up" end
+else
+  sh "cvs -z4 -d :pserver:anonymous@cvs.ruby-lang.org:/src co -d #{ruby_dir} -r ruby_1_8 ruby"
+end
+
+Dir.chdir ruby_dir do
+  sh "rm gc.c"
+  sh "cvs up gc.c"
+  sh "patch < #{File.join old_pwd, "gc.c.patch"}"
+  sh "autoconf" unless File.exist? "configure"
+  sh "./configure --program-suffix=_mem_inspect" unless File.exist? "Makefile"
+  sh "make"
+
+  puts "*" * 80
+  puts "Ruby has been built in #{ruby_dir}, but not installed"
+  puts
+  puts "If you run:"
+  puts
+  puts "\tcd #{ruby_dir}; sudo make install"
+  puts
+  puts "YOU WILL OVERWRITE YOUR STDLIB"
+  puts
+  puts "Generally, this is harmless, but you may not want that."
+  puts "So I'll let you do that all by yourself."
+  puts
+  puts "You may now run ruby_mem_dump using the patched ruby:"
+  puts
+  puts "\t#{File.join ruby_dir, "ruby_mem_inspect"} -S ruby_mem_dump"
+  puts
+  puts "If you haven't installed mem_inspect:"
+  puts
+  puts "\t#{File.join ruby_dir, "ruby_mem_inspect"} -Ilib bin/ruby_mem_dump"
+  puts
+  puts "*" * 80
+end
+
